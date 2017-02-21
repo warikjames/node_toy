@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/p5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.8/addons/p5.dom.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        // var text; // variable for the text div you'll create
+        var socket = new WebSocket("ws://localhost:8081");
+
+        function setup() {
+            // The socket connection needs two event listeners:
+            //socket.onopen = openSocket;
+            socket.onmessage = showData;
+        }
+
+        function draw() {}
+
+        function openSocket() {
+
+            //$("#LO_A").html("Socket open");
+            $("#LO_A").show();
+            $("#LO_B").show();
+            $("#LO_C").show();
+            $("#LO_D").show();
+
+            socket.send("Hello server");
+        }
+
+        //var result = result.data;
+        var keyA_ON = "LO_a_ON";
+        var keyA_OFF = "LO_a_OFF";
+
+        var keyB_ON = "LO_b_ON";
+        var keyB_OFF = "LO_b_OFF";
+
+        var keyC_ON = "LO_c_ON";
+        var keyC_OFF = "LO_c_OFF";
+
+        var keyD_ON = "LO_d_ON";
+        var keyD_OFF = "LO_d_OFF";
+
+
+        function showData(result) {
+
+            function key_A(result) {
+                if (result.data == keyA_ON) {
+                    $("#LO_A").css("background-color", "#FF0000"); //red  
+                } else if (result.data == keyA_OFF) {
+                    $("#LO_A").css("background-color", "#FFFFFF"); //white 
+                }
+            }
+
+            function key_B(result) {
+                if (result.data == keyB_ON) {
+                    $("#LO_B").css("background-color", "#FF00FF"); //purple  
+                } else if (result.data == keyB_OFF) {
+                    $("#LO_B").css("background-color", "#FFFFFF"); //white 
+                }
+            }
+
+            function key_C(result) {
+                if (result.data == keyC_ON) {
+                    $("#LO_C").css("background-color", "blue"); //purple  
+                } else if (result.data == keyC_OFF) {
+                    $("#LO_C").css("background-color", "#FFFFFF"); //white
+                }
+            }
+
+            function key_D(result) {
+                if (result.data == keyD_ON) {
+                    $("#LO_D").css("background-color", "yellow"); //purple  
+                } else if (result.data == keyD_OFF) {
+                    $("#LO_D").css("background-color", "#FFFFFF"); //white 
+                }
+            }
+            key_A(result);
+            key_B(result);
+            key_C(result);
+            key_D(result);
+        }
+    </script>
+    <style>
+        #LO_A {
+            /*red*/
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            margin: 0;
+            top: 0;
+            left: 0;
+        }
+        
+        #LO_B {
+            /*purple*/
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            margin: 0;
+            top: 50%;
+            left: 0px;
+        }
+        
+        #LO_C {
+            /*blue*/
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            margin: 0;
+            top: 0px;
+            left: 50%;
+        }
+        
+        #LO_D {
+            /*yellow*/
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            margin: 0;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="text"></div>
+    <div id="LO_A"></div>
+    <div id="LO_B"></div>
+    <div id="LO_C"></div>
+    <div id="LO_D"></div>
+</body>
+
+</html>
